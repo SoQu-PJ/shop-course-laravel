@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use TheSeer\Tokenizer\Exception;
 
 class UserController extends Controller
 {
@@ -60,11 +61,15 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        $flight = User::find($id);
-        $flight->delete();
+        try {
+            $user->delete();
 
-        return response()->json(['status' => 'success']);
+            return response()->json(['status' => 'success']);
+
+        } catch (Exception $e) {
+            return response()->json(['status' => 'error', 'message' => 'Wystąpił błąd!'])->setStatusCode(500);
+        }
     }
 }

@@ -34,23 +34,9 @@
 @endsection
 
 @section('javascript')
-    $(function() {
-    {{-- find delete class and give him event click --}}
-    $('.delete').click(function(){
-    {{-- ajax delete --}}
-    $.ajax({
-    method: "DELETE",
-    url: "http://shop.test/users/" + $(this).data("id")
-    {{-- data: { id: $(this).data("id") } --}}
-    })
-    {{-- done --}}
-    .done(function( response ) {
-    window.location.reload();
-    })
-    {{-- fail --}}
-    .fail(function(response){
-    alert("ERROR");
-    });
-    })
-    });
+    const deleteURL = "{{ url('users') }}/";
+@endsection
+
+@section('js-files')
+    @vite('resources/js/delete.js')
 @endsection
